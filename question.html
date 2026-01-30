@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un message pour toi 💌</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="letter">
+            <div class="letter-header">
+                <h2>Lis ce petit mot... <span class="heart-icon">💗</span></h2>
+                <p class="signature">De Tony l'amour de ta vie <span class="smiley">🥰</span></p>
+            </div>
+            
+            <div class="question">
+                <h1>Veux-tu être ma Valentine Kerena ? <span class="emoji">😍💖</span></h1>
+                
+                <div class="buttons">
+                    <button id="yesBtn" class="btn btn-yes">
+                        Oui <span class="emoji-btn">👩‍❤️‍💋‍👨‍👩</span>
+                    </button>
+                    
+                    <button id="noBtn" class="btn btn-no">
+                        Non <span class="emoji-btn">😔</span>
+                    </button>
+                </div>
+                
+                <div id="confirmation" class="confirmation" style="display: none;">
+                    <p id="confirmation-text" class="confirmation-text"></p>
+                </div>
+            </div>
+            
+            <div class="letter-footer">
+                <p><i class="fas fa-heart"></i> Avec tout mon amour <i class="fas fa-heart"></i></p>
+            </div>
+        </div>
+    </div>
+
+    <audio id="heartSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-heartbeat-1189.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sadSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-sad-game-over-trombone-471.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let yesClicks = 0;
+        const messages = [
+            "Tu es sur?",
+            "Je t'aime sincèrement… tu veux arrêter ce qui me fait mal et me choisir vraiment ?",
+            "Dernière chance... tu es vraiment sûre? ❤️"
+        ];
+        
+        document.getElementById('yesBtn').addEventListener('click', function() {
+            // Son de cœur
+            document.getElementById('heartSound').currentTime = 0;
+            document.getElementById('heartSound').play();
+            
+            // Animation du bouton
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
+            
+            yesClicks++;
+            
+            // Afficher les messages de confirmation
+            if (yesClicks <= 3) {
+                // Afficher le message de confirmation
+                document.getElementById('confirmation').style.display = 'block';
+                document.getElementById('confirmation-text').textContent = messages[yesClicks - 1];
+                
+                // Animation d'apparition
+                document.getElementById('confirmation').style.animation = 'fadeIn 0.5s';
+                
+                // Changement du texte du bouton au 3ème clic
+                if (yesClicks === 3) {
+                    this.innerHTML = 'OUI JE VEUX ! <span class="emoji-btn">💍❤️</span>';
+                    this.style.background = 'linear-gradient(45deg, #ff3366, #cc0066)';
+                    this.style.fontSize = '1.6rem';
+                    this.style.padding = '18px 50px';
+                    this.style.boxShadow = '0 0 30px rgba(255, 51, 102, 0.6)';
+                    
+                    // Ajouter une animation spéciale
+                    this.style.animation = 'pulse 1s infinite';
+                }
+            }
+            
+            // Redirection au 4ème clic (après avoir vu les 3 messages)
+            if (yesClicks >= 4) {
+                // Désactiver le bouton pendant la redirection
+                this.disabled = true;
+                this.innerHTML = '<i class="fas fa-heart"></i> Redirection...';
+                
+                // Animation de transition
+                document.querySelector('.container').style.animation = 'fadeOut 1s';
+                
+                // Redirection vers final.html
+                setTimeout(function() {
+                    window.location.href = 'final.html';
+                }, 1000);
+            }
+        });
+        
+        document.getElementById('noBtn').addEventListener('click', function() {
+            // Son triste
+            document.getElementById('sadSound').play();
+            
+            // Animation
+            this.style.background = '#ccc';
+            this.innerHTML = 'Non <span class="emoji-btn">💔😢</span>';
+            
+            // Désactiver les boutons
+            document.getElementById('yesBtn').style.opacity = '0.5';
+            document.getElementById('yesBtn').style.pointerEvents = 'none';
+            this.style.pointerEvents = 'none';
+            
+            // Animation de transition
+            document.querySelector('.container').style.animation = 'shakeNo 1s';
+            
+            // Redirection après délai
+            setTimeout(function() {
+                window.location.href = 'no.html';
+            }, 1500);
+        });
+        
+        // Animation au survol des boutons
+        document.getElementById('yesBtn').addEventListener('mouseenter', function() {
+            if (!this.disabled) {
+                this.style.transform = 'translateY(-5px)';
+            }
+        });
+        
+        document.getElementById('yesBtn').addEventListener('mouseleave', function() {
+            if (!this.disabled) {
+                this.style.transform = 'translateY(0)';
+            }
+        });
+        
+        // Effet de secousse pour le bouton "Non"
+        document.getElementById('noBtn').addEventListener('mouseenter', function() {
+            this.style.animation = 'shake 0.5s';
+        });
+    </script>
+</body>
+</html>

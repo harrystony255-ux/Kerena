@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon cœur...</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sad-message">
+            <div class="broken-heart">
+                <i class="fas fa-heart-broken"></i>
+            </div>
+            
+            <h1>C'est blessant mais j'accepte ton choix</h1>
+            
+            <div class="rain-container">
+                <div class="rain-drop"></div>
+                <div class="rain-drop"></div>
+                <div class="rain-drop"></div>
+                <div class="rain-drop"></div>
+                <div class="rain-drop"></div>
+            </div>
+            
+            <div class="message">
+                <p>
+                    Mon cœur est brisé mais je respecte ta décision.<br>
+                    Je garderai toujours une place spéciale pour toi.
+                </p>
+                
+                <div class="tear-drop">
+                    <i class="fas fa-tint"></i>
+                </div>
+            </div>
+            
+            <div class="options">
+                <p class="question">Tu veux repenser à ta décision ?</p>
+                
+                <div class="buttons">
+                    <button class="btn btn-change" onclick="changeMind()">
+                        <i class="fas fa-redo"></i> Oui, je veux changer d'avis
+                    </button>
+                    
+                    <button class="btn btn-final" onclick="finalDecision()">
+                        <i class="fas fa-door-closed"></i> Non, ma décision est finale
+                    </button>
+                </div>
+                
+                <div id="lastChance" class="last-chance" style="display: none;">
+                    <h3><i class="fas fa-heart-circle-check"></i> Dernière chance...</h3>
+                    <p>Es-tu vraiment sûre de ton choix ? Je t'aime tellement...</p>
+                    <button class="btn btn-yes" onclick="window.location.href='question.html'">
+                        <i class="fas fa-heart"></i> Je reviens vers toi !
+                    </button>
+                </div>
+            </div>
+            
+            <p class="return-link">
+                <a href="index.html">
+                    <i class="fas fa-envelope"></i> Retour à l'enveloppe
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <audio id="rainSound" preload="auto" loop>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-rain-loop-1244.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // Démarrer le son de pluie
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('rainSound').volume = 0.3;
+            document.getElementById('rainSound').play();
+            
+            // Animation des gouttes de pluie
+            const drops = document.querySelectorAll('.rain-drop');
+            drops.forEach((drop, index) => {
+                drop.style.left = `${20 + index * 15}%`;
+                drop.style.animationDelay = `${index * 0.2}s`;
+            });
+            
+            // Animation du cœur brisé
+            const brokenHeart = document.querySelector('.broken-heart i');
+            setInterval(() => {
+                brokenHeart.style.transform = `scale(${0.9 + Math.random() * 0.2})`;
+            }, 1000);
+        });
+        
+        function changeMind() {
+            document.getElementById('lastChance').style.display = 'block';
+            document.getElementById('lastChance').style.animation = 'fadeIn 1s';
+            
+            // Son d'espoir
+            const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkles-300.mp3');
+            audio.play();
+        }
+        
+        function finalDecision() {
+            // Animation de fermeture
+            const container = document.querySelector('.container');
+            container.style.animation = 'fadeOut 2s';
+            
+            // Son final
+            const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-door-closed-1121.mp3');
+            audio.play();
+            
+            // Redirection après délai
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+        
+        // Animation de la goutte de larme
+        const tear = document.querySelector('.tear-drop i');
+        setInterval(() => {
+            tear.style.opacity = '0.5';
+            setTimeout(() => {
+                tear.style.opacity = '1';
+            }, 1000);
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Je t'aime ! ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="final-message">
+            <div class="success-animation">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            
+            <div class="heart-animation">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+            
+            <h1 class="love-text">Je t'aime</h1>
+            <h2>Tu as fait mon bonheur Mademoiselle Kerena! <span class="smiley">🥰</span></h2>
+            
+            <div class="message-box">
+                <p class="romantic-text">
+                    Merci d'avoir dit oui Ra-Noum ah! <br>
+                    Tu es la personne la plus importante pour moi. <br>
+                    Chaque moment avec toi est un cadeau. ❤️
+                </p>
+                
+                <div class="date">
+                    <i class="far fa-calendar-heart"></i>
+                    Saint-Valentin 2026
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="btn btn-yes" onclick="showSurprise()">
+                    <i class="fas fa-gift"></i> Tyh misy surprise
+                </button>
+                
+                <!-- <button class="btn btn-love" onclick="shareLove()">
+                    <i class="fas fa-share-heart"></i> Partager notre amour
+                </button> -->
+            </div>
+            
+            <div id="surprise" class="surprise" style="display: none;">
+                <h3><i class="fas fa-star"></i> Tu es mon étoile oaaa !</h3>
+                <p>Je te promets de toujours être là pour toi, de t'aimer chaque jour un peu plus.</p>
+                <div class="fireworks">
+                    <div class="firework"></div>
+                    <div class="firework"></div>
+                    <div class="firework"></div>
+                </div>
+            </div>
+            
+            <div class="floating-hearts" id="floatingHearts">
+                <!-- Les cœurs seront générés par JS -->
+            </div>
+        </div>
+    </div>
+    
+    <audio id="celebrationSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-happy-crowd-laugh-464.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Jouer le son de célébration
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('celebrationSound').play();
+            
+            // Générer des cœurs flottants
+            const floatingHearts = document.getElementById('floatingHearts');
+            const heartEmojis = ['❤️', '💖', '💗', '💕', '💓', '💞', '💝', '💘', '🥰', '😍'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.fontSize = `${Math.random() * 20 + 20}px`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                heart.style.animationDuration = `${Math.random() * 3 + 3}s`;
+                floatingHearts.appendChild(heart);
+            }
+            
+            // Animation du texte
+            const loveText = document.querySelector('.love-text');
+            setTimeout(() => {
+                loveText.style.transform = 'scale(1.1)';
+                loveText.style.color = '#ff0066';
+            }, 1000);
+        });
+        
+        function showSurprise() {
+            const surprise = document.getElementById('surprise');
+            surprise.style.display = 'block';
+            
+            // Animation
+            surprise.style.animation = 'fadeIn 1s';
+            
+            // Sons supplémentaires
+            const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3');
+            audio.play();
+        }
+        
+        function shareLove() {
+            const text = "Je t'aime plus que tout ! ❤️ - Notre Saint-Valentin";
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Je t\'aime !',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Message copié ! Colle-le pour le partager avec moi ❤️');
+                });
+            }
+        }
+        
+        // Effet de clignotement des cœurs
+        setInterval(() => {
+            const hearts = document.querySelectorAll('.heart-animation i');
+            hearts.forEach(heart => {
+                heart.style.color = `hsl(${Math.random() * 360}, 100%, 65%)`;
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

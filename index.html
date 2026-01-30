@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour toi ❤️ - Saint Valentin</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="envelope-container">
+            <h1>Clique sur l'enveloppe stp</h1>
+            <div class="envelope" id="envelope">
+                <div class="envelope-front">
+                    <div class="heart"><i class="fas fa-heart"></i></div>
+                </div>
+                <div class="envelope-back"></div>
+            </div>
+            <br>
+            <br>
+            <p class="hint">Clique sur l'enveloppe pour découvrir le message</p>
+        </div>
+    </div>
+
+    <audio id="clickSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.getElementById('envelope').addEventListener('click', function() {
+            // Jouer un son de clic
+            document.getElementById('clickSound').play();
+            
+            // Animation d'ouverture
+            this.style.transform = 'scale(1.1) rotate(5deg)';
+            this.style.transition = 'transform 0.5s';
+            
+            // Redirection après un délai
+            setTimeout(function() {
+                window.location.href = 'question.html';
+            }, 500);
+        });
+        
+        // Animation au survol
+        document.getElementById('envelope').addEventListener('mouseenter', function() {
+            this.style.cursor = 'pointer';
+        });
+    </script>
+</body>
+</html>
